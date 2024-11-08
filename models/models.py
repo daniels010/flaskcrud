@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -40,6 +42,8 @@ class Venda(db.Model):
     quantidade_vendida = db.Column(db.Integer, nullable=False)
     cliente = db.relationship('Cliente', backref='vendas')
     produto = db.relationship('Produto', backref='vendas')
+
+    data_venda = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def _repr_(self):
         return f'<Venda {self.id}>'

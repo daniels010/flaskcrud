@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Vendas</title>
+    <style>
+        /* Estilos gerais */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            flex-wrap: wrap;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .column {
+            width: 48%;
+        }
+
+        /* Estilo da tabela */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Relatório de Vendas</h1>
+
+        <div class="columns">
+            <!-- Vendas por Cliente -->
+            <div class="column">
+                <h2>Vendas por Cliente</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Produto</th>
+                            <th>Quantidade Vendida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cliente_id, cliente_info in vendas_por_cliente.items() %}
+                            <tr>
+                                <td colspan="3" class="text-center font-weight-bold">{{ cliente_info['nome'] }}</td>
+                            </tr>
+                            {% for produto_id, venda in cliente_info['vendas'].items() %}
+                                <tr>
+                                    <td></td>
+                                    <td>{{ venda['produto_nome'] }}</td>
+                                    <td>{{ venda['quantidade_vendida'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Vendas por Produto -->
+            <div class="column">
+                <h2>Vendas por Produto</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Cliente</th>
+                            <th>Quantidade Vendida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for produto_id, produto_info in vendas_por_produto.items() %}
+                            <tr>
+                                <td colspan="3" class="text-center font-weight-bold">{{ produto_info['nome'] }}</td>
+                            </tr>
+                            {% for cliente_id, venda in produto_info['vendas'].items() %}
+                                <tr>
+                                    <td></td>
+                                    <td>{{ venda['cliente_nome'] }}</td>
+                                    <td>{{ venda['quantidade_vendida'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

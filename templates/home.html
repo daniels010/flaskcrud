@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Loja do José</title>
+    <style>
+        /* Estilos gerais */
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
+        .container { width: 60%; padding: 20px; background-color: #fff; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; }
+        .flash-message { padding: 10px; margin-bottom: 15px; border-radius: 5px; font-weight: bold; }
+        .flash-success { background-color: #d4edda; color: #155724; }
+        .flash-error { background-color: #f8d7da; color: #721c24; }
+        .buttons-container { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; margin-top: 20px; }
+        .button { padding: 15px 30px; background-color: #007bff; color: white; text-align: center; border-radius: 5px; cursor: pointer; width: 200px; font-size: 16px; transition: background-color 0.3s; text-decoration: none; display: inline-block; }
+        .button:hover { background-color: #0056b3; }
+        .header { width: 100%; background-color: #007bff; color: white; text-align: center; padding: 20px 0; font-size: 24px; font-weight: bold; border-radius: 8px 8px 0 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho da página -->
+    <div class="header">
+        Loja do José
+    </div>
+
+    <!-- Conteúdo da home -->
+    <div class="container">
+        <h1>Bem-vindo à Loja do José</h1>
+
+        <!-- Flash message (se houver) -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Container com os botões de funcionalidade -->
+        <div class="buttons-container">
+            <!-- Botões para as funcionalidades -->
+            <a href="{{ url_for('adicionar_cliente') }}" class="button">Adicionar Cliente</a>
+            <a href="{{ url_for('add_produto') }}" class="button">Adicionar Produto</a>
+            <a href="{{ url_for('realizar_venda') }}" class="button">Realizar Venda</a>
+            <a href="{{ url_for('get_clientes') }}" class="button">Ver Clientes</a>
+            <a href="{{ url_for('get_produtos') }}" class="button">Ver Produtos</a>
+            <a href="{{ url_for('relatorio_vendas') }}" class="button">Relatório de Vendas</a>
+            <a href="{{ url_for('gerar_csv') }}" class="button">Gerar CSV</a>
+            <a href="{{ url_for('upload_csv') }}" class="button">Upload CSV</a>
+            <!-- Botão para gráficos de vendas -->
+            <a href="#" class="button">Gerar Gráficos de Vendas</a>
+        </div>
+    </div>
+
+</body>
+</html>

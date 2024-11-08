@@ -1,5 +1,7 @@
+from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, FloatField, FileField
+from wtforms.fields.datetime import DateField
 from wtforms.validators import DataRequired, Length, Email, NumberRange, Optional, Regexp
 
 # Formulário de Cliente
@@ -35,3 +37,4 @@ class VendaForm(FlaskForm):
     cliente_id = IntegerField('ID do Cliente', validators=[DataRequired()])
     produto_id = IntegerField('ID do Produto', validators=[DataRequired()])
     quantidade_vendida = IntegerField('Quantidade Vendida', validators=[DataRequired(), NumberRange(min=1)])
+    data_venda = DateField('Data da Venda', format='%Y-%m-%d', default=datetime.today)
