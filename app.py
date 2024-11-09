@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 
 app.config['WTF_CSRF_ENABLED'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clientes2.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clientes.db'
 app.config['SECRET_KEY'] = 'sua_chave_secreta'
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'static', 'uploads')
@@ -27,6 +27,10 @@ app.config['CSV_FOLDER'] = os.path.join(BASE_DIR, 'static')
 #    os.makedirs(app.config['UPLOAD_FOLDER'])
 
 db.init_app(app)
+
+@app.route('/')
+def home():
+    return render_template('home.html')
 
 @app.route('/adicionar-clientes', methods=['GET', 'POST'])
 def adicionar_cliente():
@@ -172,6 +176,7 @@ def realizar_venda():
     return render_template('realizar_venda.html', data_atual=data_atual)
 
 
+# SO PRA DEBUG DPS FAZER OUTRO PRA EDVOLVER O HTML
 
 @app.route('/vendas', methods=['GET'])
 def get_vendas():
@@ -451,14 +456,10 @@ def gerar_csv():
 
 
     return Response(output, mimetype="text/csv",
-                    headers={"Content-Disposition": "attachment;filename=vendas_diarias2.csv"})
+                    headers={"Content-Disposition": "attachment;filename=vendas_diarias.csv"})
 
-@app.route('/')
-def home():
-    return render_template('home.html')
 
 ALLOWED_EXTENSIONS = {'csv'}
-
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
